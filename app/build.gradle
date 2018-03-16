@@ -1,0 +1,9 @@
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation _support.appcompat
+    implementation _support.constraint
+    testImplementation _test.junit
+    androidTestImplementation _test.runner
+    androidTestImplementation _test.espresso
+//    compile 'com.github.aii1991:AndroidRapidDev:v1.0.0'
+}
