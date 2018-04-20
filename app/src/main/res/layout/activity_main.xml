@@ -14,6 +14,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -24,19 +25,20 @@
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-        </android.support.design.widget.AppBarLayout>
 
-        <android.support.design.widget.TabLayout
-            app:data="@{mainVm.getTypeList()}"
-            app:activity="@{mainVm.getActivity()}"
-            app:view_pager_id="@{@id/view_page}"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                app:tabMode="scrollable"
+                android:layout_height="50dp" />
+
+        </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_page"
             app:activity="@{mainVm.getActivity()}"
             app:data="@{mainVm.getTypeList()}"
+            app:tab_layout_id="@{@id/tab_layout}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />

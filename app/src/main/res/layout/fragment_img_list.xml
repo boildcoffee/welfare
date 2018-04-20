@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="imgListVm"
+            type="com.boiledcoffee.welfare.vm.ImgListVm" />
+        <import type="com.boildcoffee.base.bindingadapter.LayoutManagers" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            bind:pageVM="@{imgListVm}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:background="@android:color/holo_blue_dark"
+                bind:layoutManager="@{LayoutManagers.linear()}"
+                bind:pageVM="@{imgListVm}"
+                bind:itemViewId="@{@layout/item_list_img}"
+                bind:BRName="@{imgListVm.getVariableId()}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    </LinearLayout>
+</layout>
+

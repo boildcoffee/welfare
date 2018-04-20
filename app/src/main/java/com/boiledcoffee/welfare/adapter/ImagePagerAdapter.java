@@ -42,4 +42,8 @@ public class ImagePagerAdapter extends FragmentPagerAdapter{
         return fragments.size();
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mDatas.get(position).getName();
+    }
 }
