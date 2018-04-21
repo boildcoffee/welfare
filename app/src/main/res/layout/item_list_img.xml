@@ -19,7 +19,7 @@
 
             <ImageView
                 android:background="@android:color/black"
-                bind:loadUrl="@{imageWelfare.getCover()}"
+                bind:loadImageUrl="@{imageWelfare.getCover()}"
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
 

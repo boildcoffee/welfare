@@ -5,6 +5,6 @@ dependencies {
     testImplementation _test.junit
     androidTestImplementation _test.runner
     androidTestImplementation _test.espresso
-    implementation 'com.github.aii1991:AndroidRapidDev:v1.0.2'
+    implementation 'com.github.aii1991:AndroidRapidDev:v1.0.4'
     implementation 'org.jsoup:jsoup:1.11.2'
 }

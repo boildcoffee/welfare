@@ -1,5 +1,11 @@
 package com.boiledcoffee.welfare.repository;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.boildcoffee.base.BFConfig;
+import com.boildcoffee.base.imageloader.GlideApp;
+import com.boildcoffee.base.imageloader.ImageLoaderManager;
 import com.boildcoffee.base.network.RetrofitManager;
 import com.boildcoffee.base.network.rx.TransformerHelper;
 import com.boiledcoffee.welfare.api.WelfareApi;
@@ -23,18 +29,35 @@ import io.reactivex.Observable;
  */
 
 public class ImageRepository {
+    public static final String BASE_URL = "http://www.mzitu.com/";
     private ImageRepository(){}
 
     public static ImageRepository create(){
         return new ImageRepository();
     }
 
-    public static final String DEFAULT_TYPE_VALUE = "gallery";
+    public static final String DEFAULT_TYPE_VALUE = "";
     private static List<Type> mTypeList;
     private static Map<String,String> mTypeMap;
-    private String mCurrentTypeValue;
-    private Map<String,Integer> totalPageMap = new HashMap<>(); //当前类型的总页数
+    private static String mCurrentTypeValue;
+    private Map<String,Integer> mTypeMaxPageMap;
+    private int currentLastPage = -1;
 
+    @BindingAdapter(value = {
+            "loadImageUrl"
+    })
+    public static void loadWelfareImg(ImageView v,String url){
+        Map<String,String> headers = new HashMap<>();
+        headers.put("referer",BFConfig.INSTANCE.getConfig().getBaseUrl() + mCurrentTypeValue);
+        headers.put("user-Agent","Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36");
+        ImageLoaderManager.getInstance().loadImg(GlideApp.with(v.getContext()),url,headers,null,null)
+                .into(v);
+    }
+
+    /**
+     * 获取图片所属类型 如：首页 最新 性感
+     * @return
+     */
     public Observable<List<Type>> getTypes(){
         return getData(DEFAULT_TYPE_VALUE)
                 .map(document -> {
@@ -47,13 +70,9 @@ public class ImageRepository {
 
     public Observable<List<ImageWelfare>> getImageWelfare(String typeValue, int currentPage){
         mCurrentTypeValue = typeValue;
-        if (!totalPageMap.isEmpty() && currentPage > totalPageMap.get(typeValue)){ //没有更多数据
-            return Observable.just(new ArrayList<ImageWelfare>())
-                    .compose(TransformerHelper.observableToMainThreadTransformer());
-        }
-        String value = currentPage == 0 ? typeValue : typeValue + "/" + currentPage + ".html";
+        String value = currentPage  <= 1 ? typeValue : typeValue + "/page/" + currentPage;
         return getData(value)
-                .map(this::parseDocument);
+                .map(document -> parseDocument(document,currentPage));
     }
 
     private Observable<Document> getData(String value) {
@@ -64,50 +83,89 @@ public class ImageRepository {
                 .compose(TransformerHelper.observableToMainThreadTransformer());
     }
 
-    private List<ImageWelfare> parseDocument(Document document) {
+    private List<ImageWelfare> parseDocument(Document document,int currentPage) {
         List<ImageWelfare> imageWelfareList = new ArrayList<>();
         if (mTypeList == null){
             mTypeList = parseTypes(document);
         }
-        totalPageMap.put(mCurrentTypeValue,parseTotalPage(document));
-        Elements elements = document.select(".listdiv > ul > li > .galleryli_div > .galleryli_link > img");
+        if (!hasPage(document,currentPage)){
+            return imageWelfareList;
+        }
+        Elements elements = document.select(".postlist > ul > li > a");
         for (Element element : elements){
             ImageWelfare imageWelfare = new ImageWelfare();
             imageWelfare.setTypeName(mTypeMap.get(mCurrentTypeValue));
-            imageWelfare.setTypeValue(mCurrentTypeValue);
-            imageWelfare.setCover(element.attr("data-original"));
-            imageWelfare.setTitle(element.attr("title"));
+            imageWelfare.setTypeValue(parseTypeValue(element.attr("href")));
+            Element imgElement = element.child(0);
+            imageWelfare.setCover(imgElement.attr("data-original"));
+            imageWelfare.setTitle(imgElement.attr("alt"));
             imageWelfareList.add(imageWelfare);
         }
         return imageWelfareList;
     }
 
-    private Integer parseTotalPage(Document document) {
-        Elements elements = document.select(".pagesYY > div > a");
-        int totalPage = 0;
+    /**
+     *  判断当前页数是否小于等于最大页数
+     * @param document
+     * @param currentPage
+     * @return
+     */
+    private boolean hasPage(Document document,int currentPage) {
+        if (mTypeMaxPageMap == null){
+            mTypeMaxPageMap = new HashMap<>();
+        }
+        if (mTypeMaxPageMap.get(mCurrentTypeValue) != null){
+            return currentPage <= mTypeMaxPageMap.get(mCurrentTypeValue);
+        }
+
+        Elements elements = document.select("nav .nav-links .page-numbers");
+        int maxPage = -1;
         for (Element element : elements){
-            String text = element.text();
-            if (text.contains("上一页") || text.contains("下一页")){
+            if (element.hasClass("dots")){
                 continue;
             }
-            totalPage ++;
+            String text = element.text();
+            try {
+                int page = Integer.parseInt(text);
+                if (page > maxPage){
+                    maxPage = page;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
-        return totalPage;
+        mTypeMaxPageMap.put(mCurrentTypeValue,maxPage);
+        return currentPage <= maxPage;
     }
 
     private List<Type> parseTypes(Document document) {
-        Elements elements = document.select(".tag_div > ul > li > a");
+        Elements elements = document.select(".mainnav > ul > li > a");
         List<Type> typeList = new ArrayList<>();
         mTypeMap = new HashMap<>();
+        Elements subElements = document.select(".main > .main-content > .subnav > a");
+        if (subElements != null && !subElements.isEmpty()){
+            addType(subElements,typeList);
+        }
+        addType(elements, typeList);
+        return typeList;
+    }
+
+    private void addType(Elements elements, List<Type> typeList) {
         for (Element element : elements){
             Type type = new Type();
             String text = element.text();
-            String value = element.attr("href");
+            String value = element.attr("href").replaceAll(BASE_URL,"");
+            if ("首页".equals(text) || "zipai/".equals(value) || "all/".equals(value) || "best/".equals(value) || "zhuanti/".equals(value)){
+                continue;
+            }
             type.setName(text);
             type.setValue(value);
             typeList.add(type);
             mTypeMap.put(value,text);
         }
-        return typeList;
+    }
+
+    private String parseTypeValue(String url) {
+        return url.substring(url.lastIndexOf("/") + 1);
     }
 }
