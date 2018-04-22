@@ -8,6 +8,7 @@
             name="imgListVm"
             type="com.boiledcoffee.welfare.vm.ImgListVm" />
         <import type="com.boildcoffee.base.bindingadapter.LayoutManagers" />
+        <import type="android.support.v7.widget.StaggeredGridLayoutManager" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -19,9 +20,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <android.support.v7.widget.RecyclerView
-                android:background="@android:color/holo_blue_dark"
-                bind:layoutManager="@{LayoutManagers.linear()}"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_5"
+                bind:layoutManager="@{LayoutManagers.grid(2)}"
                 bind:pageVM="@{imgListVm}"
+                bind:onItemClickListener="@{imgListVm.mItemClickListener}"
                 bind:itemViewId="@{@layout/item_list_img}"
                 bind:BRName="@{imgListVm.getVariableId()}"
                 android:layout_width="match_parent"

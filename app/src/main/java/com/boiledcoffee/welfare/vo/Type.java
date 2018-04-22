@@ -6,7 +6,7 @@ package com.boiledcoffee.welfare.vo;
 
 public class Type {
     private String name;
-    private String value;
+    private String url;
 
     public String getName() {
         return name;
@@ -16,12 +16,12 @@ public class Type {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getUrl() {
+        return url;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
@@ -32,13 +32,13 @@ public class Type {
         Type type = (Type) o;
 
         if (name != null ? !name.equals(type.name) : type.name != null) return false;
-        return value != null ? value.equals(type.value) : type.value == null;
+        return url != null ? url.equals(type.url) : type.url == null;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
         return result;
     }
 }

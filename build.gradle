@@ -38,7 +38,7 @@ subprojects{
         defaultConfig {
             if(isAppModule){
                 applicationId "com.boiledcoffee.welfare"
-                multiDexEnabled false
+                multiDexEnabled true
             }
             minSdkVersion _app.minSdkVersion as Integer
             targetSdkVersion _app.targetSdkVersion as Integer

@@ -20,12 +20,12 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
  */
 
 public class ImageListFragment extends RxFragment {
-    private static final String PARAM_VALUE = "value";
+    private static final String PARAM_VALUE = "url";
     ImgListVm mImgListVm;
 
-    public static ImageListFragment newInstance(String typeValue) {
+    public static ImageListFragment newInstance(String url) {
         Bundle args = new Bundle();
-        args.putString(PARAM_VALUE,typeValue);
+        args.putString(PARAM_VALUE,url);
         ImageListFragment fragment = new ImageListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -34,8 +34,8 @@ public class ImageListFragment extends RxFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String typeValue = getArguments().getString(PARAM_VALUE);
-        mImgListVm = new ImgListVm((BaseActivity) getActivity(),typeValue);
+        String url = getArguments().getString(PARAM_VALUE);
+        mImgListVm = new ImgListVm((BaseActivity) getActivity(),url);
     }
 
     @Nullable

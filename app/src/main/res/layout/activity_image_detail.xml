@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="imgListVm"
+            type="com.boiledcoffee.welfare.vm.ImgDetailVm" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_page"
+            bind:onPageSelected="@{imgListVm.getOnPageSelectedListener()}"
+            bind:detailPageUrls="@{imgListVm.getUrls()}"
+            bind:activity="@{imgListVm.getActivity()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:padding="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_white"
+            android:onClick="@{imgListVm.clickBackListener}" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:background="#0f000000"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:text="@{imgListVm.getPageIndicator()}"
+            android:textSize="@dimen/sp_18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+</layout>
+
