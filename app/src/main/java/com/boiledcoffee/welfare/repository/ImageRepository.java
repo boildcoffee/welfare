@@ -38,7 +38,7 @@ public class ImageRepository {
         return new ImageRepository();
     }
 
-    public static final String DEFAULT_TYPE_VALUE = "";
+    private static final String DEFAULT_URL = "";
     private static List<Type> mTypeList;
     private static Map<String,String> mTypeMap;
     private static String mCurrentUrl;
@@ -62,7 +62,7 @@ public class ImageRepository {
      * @return
      */
     public Observable<List<Type>> getTypes(){
-        return getHtmlData(DEFAULT_TYPE_VALUE)
+        return getHtmlData(DEFAULT_URL)
                 .map(document -> {
                     if (mTypeList == null){
                         mTypeList = parseTypes(document);
