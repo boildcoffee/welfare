@@ -10,7 +10,6 @@ import java.util.List;
 public class Atlas {
     private String title;
     private String cover;
-    private List<Image> imageList;
     private String typeName;
     private String url;
     private String detailUrl;
@@ -29,14 +28,6 @@ public class Atlas {
 
     public void setCover(String cover) {
         this.cover = cover;
-    }
-
-    public List<Image> getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(List<Image> imageList) {
-        this.imageList = imageList;
     }
 
     public String getTypeName() {

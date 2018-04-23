@@ -12,6 +12,6 @@ import retrofit2.http.Path;
  */
 
 public interface WelfareApi {
-    @GET("/{value}")
-    Observable<Document> getData(@Path("value") String value);
+    @GET("/{url}")
+    Observable<Document> getData(@Path("url") String value);
 }

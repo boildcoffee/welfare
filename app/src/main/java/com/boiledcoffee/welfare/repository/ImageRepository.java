@@ -58,7 +58,7 @@ public class ImageRepository {
     }
 
     /**
-     * 获取图片所属类型 如：首页 最新 性感
+     * 获取图片所属类型 如：最新 性感
      * @return
      */
     public Observable<List<Type>> getTypes(){
@@ -88,6 +88,11 @@ public class ImageRepository {
                 .map(this::parseImageUrl);
     }
 
+    /**
+     * 解析详情详情页图片对象
+     * @param document
+     * @return
+     */
     private Image parseImageUrl(Document document) {
         Image image = new Image();
         Elements elements = document.select(".main-image > p > a > img");
@@ -99,6 +104,11 @@ public class ImageRepository {
         return image;
     }
 
+    /**
+     * 获取对图册所有图片所在页面的Url地址
+     * @param document
+     * @return
+     */
     private List<String> parseDetailUrl(Document document) {
         List<String> list = new ArrayList<>();
         int maxPage = 0;
@@ -118,6 +128,12 @@ public class ImageRepository {
         return list;
     }
 
+    /**
+     * 通过对应类型的url后去图册对象
+     * @param url
+     * @param currentPage
+     * @return
+     */
     public Observable<List<Atlas>> getAtlas(String url, int currentPage){
         mCurrentUrl = url;
         String value = currentPage  <= 1 ? url : url + "page/" + currentPage;
@@ -125,6 +141,11 @@ public class ImageRepository {
                 .map(document -> parseAtlasData(document,currentPage));
     }
 
+    /**
+     * 获取html数据
+     * @param url
+     * @return
+     */
     private Observable<Document> getHtmlData(String url) {
         return RetrofitManager
                 .getInstance()
@@ -133,6 +154,12 @@ public class ImageRepository {
                 .compose(TransformerHelper.observableToMainThreadTransformer());
     }
 
+    /**
+     * 解析对应类型的图册对象
+     * @param document
+     * @param currentPage
+     * @return
+     */
     private List<Atlas> parseAtlasData(Document document, int currentPage) {
         List<Atlas> atlasList = new ArrayList<>();
         if (mTypeList == null){
