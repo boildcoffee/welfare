@@ -6,7 +6,8 @@ project.ext{
             minSdkVersion : 15,
             targetSdkVersion : 26,
             versionCode : 1,
-            versionName : "1.0"
+            versionName : "1.0",
+            abiFilters : "armeabi"
     ]
 
     def supportLibraryVersion = "26.1.0"
@@ -24,5 +25,6 @@ project.ext{
             runner: "com.android.support.test:runner:1.0.1",
             espresso: "com.android.support.test.espresso:espresso-core:3.0.1"
     ]
+
 
 }

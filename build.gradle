@@ -46,6 +46,12 @@ subprojects{
             versionName _app.versionCode as String
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             buildConfigField "int", "dbVersion", "1"
+
+            ndk {
+                //设置支持的SO库架构
+//            abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+                abiFilters _app.abiFilters
+            }
         }
         buildTypes {
             release {

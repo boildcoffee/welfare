@@ -10,5 +10,5 @@ dependencies {
     implementation 'com.github.aii1991:AndroidRapidDev:v1.1.10'
     implementation 'org.jsoup:jsoup:1.11.2'
     implementation 'com.android.support:multidex:1.0.0'
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
+//    debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
 }
