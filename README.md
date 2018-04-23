@@ -8,7 +8,7 @@
 
 ## 设计说明
 
-![liucheng.png](https://upload-images.jianshu.io/upload_images/2898841-d743b08e81013b61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![liucheng.png](https://upload-images.jianshu.io/upload_images/2898841-730af15389a202b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 版本说明
 
