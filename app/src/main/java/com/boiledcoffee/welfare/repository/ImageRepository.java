@@ -89,46 +89,6 @@ public class ImageRepository {
     }
 
     /**
-     * 解析详情详情页图片对象
-     * @param document
-     * @return
-     */
-    private Image parseImageUrl(Document document) {
-        Image image = new Image();
-        Elements elements = document.select(".main-image > p > a > img");
-        if (elements.size() > 0){
-            Element element = elements.get(0);
-            image.setUrl(element.attr("src"));
-            image.setDesc(element.attr("alt"));
-        }
-        return image;
-    }
-
-    /**
-     * 获取对图册所有图片所在页面的Url地址
-     * @param document
-     * @return
-     */
-    private List<String> parseDetailUrl(Document document) {
-        List<String> list = new ArrayList<>();
-        int maxPage = 0;
-        Elements elements = document.select(".pagenavi > a > span");
-        for (Element element : elements){
-            String strPage = element.text();
-           if (strPage.matches("^[0-9]*$")){
-                int page = Integer.valueOf(strPage);
-                if (page > maxPage){
-                    maxPage = page;
-                }
-           }
-        }
-        for (int i=1; i<=maxPage; i++){
-            list.add(mCurrentUrl + i);
-        }
-        return list;
-    }
-
-    /**
      * 通过对应类型的url后去图册对象
      * @param url
      * @param currentPage
@@ -185,6 +145,46 @@ public class ImageRepository {
             atlasList.add(atlas);
         }
         return atlasList;
+    }
+
+    /**
+     * 解析详情详情页图片对象
+     * @param document
+     * @return
+     */
+    private Image parseImageUrl(Document document) {
+        Image image = new Image();
+        Elements elements = document.select(".main-image > p > a > img");
+        if (elements.size() > 0){
+            Element element = elements.get(0);
+            image.setUrl(element.attr("src"));
+            image.setDesc(element.attr("alt"));
+        }
+        return image;
+    }
+
+    /**
+     * 获取对应图册所有图片所在页面的Url地址
+     * @param document
+     * @return
+     */
+    private List<String> parseDetailUrl(Document document) {
+        List<String> list = new ArrayList<>();
+        int maxPage = 0;
+        Elements elements = document.select(".pagenavi > a > span");
+        for (Element element : elements){
+            String strPage = element.text();
+            if (strPage.matches("^[0-9]*$")){
+                int page = Integer.valueOf(strPage);
+                if (page > maxPage){
+                    maxPage = page;
+                }
+            }
+        }
+        for (int i=1; i<=maxPage; i++){
+            list.add(mCurrentUrl + i);
+        }
+        return list;
     }
 
     /**

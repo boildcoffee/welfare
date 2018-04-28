@@ -24,6 +24,7 @@ public class MyApplication extends BaseApplication{
                 .setBaseUrl(BASE_URL)
                 .setPageSize(24)
                 .setApiQueryCacheMode(BaseConfig.CacheMode.CACHE_ELSE_NETWORK)
+                .setRspCacheTime(1000 * 60 * 60 * 24)
                 .setConverter(DocumentConverter.create())
                 .setDebug(true)
                 .build()
