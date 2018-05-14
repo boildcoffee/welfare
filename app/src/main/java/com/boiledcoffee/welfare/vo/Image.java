@@ -6,8 +6,8 @@ package com.boiledcoffee.welfare.vo;
  */
 
 public class Image {
-    private String url;
-    private String desc;
+    private String url; //图片地址
+    private String desc; //图片描述
 
     public String getUrl() {
         return url;

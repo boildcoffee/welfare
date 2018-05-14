@@ -89,7 +89,7 @@ public class ImageRepository {
     }
 
     /**
-     * 通过对应类型的url后去图册对象
+     * 通过对应类型的url获取图册对象
      * @param url
      * @param currentPage
      * @return
@@ -137,7 +137,6 @@ public class ImageRepository {
             Element spanElement = element.child(1);
             Atlas atlas = new Atlas();
             atlas.setTypeName(mTypeMap.get(mCurrentUrl));
-            atlas.setUrl(parseUrl(aElement.attr("href")));
             atlas.setDetailUrl(parseUrl(spanElement.child(0).attr("href")) + "/");
             Element imgElement = aElement.child(0);
             atlas.setCover(imgElement.attr("data-original"));
