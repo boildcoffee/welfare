@@ -12,7 +12,7 @@
 
 ## 版本说明
 
-### v1.0.0(已完成) [welfare-v1.0.0.apk](https://github.com/boildcoffee/welfare/blob/master/apk/welfare-v1.0.0.apk)
+### v1.0.0(已完成) [welfare-v1.0.1.apk](https://github.com/boildcoffee/welfare/blob/master/apk/welfare-v1.0.0.apk)
 
 1. 完成图集按照图片类型进行展示
 2. 完成通过全屏可放大缩小查看图集里的图片

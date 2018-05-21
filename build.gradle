@@ -79,5 +79,9 @@ subprojects{
                 enabled true
             }
         }
+
+        lintOptions{
+            abortOnError false
+        }
     }
 }
