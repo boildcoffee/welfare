@@ -208,6 +208,9 @@ public class ImageRepository {
                 continue;
             }
             String text = element.text();
+            if (text.matches("[\\u4e00-\\u9fa5]")){
+                continue;
+            }
             try {
                 int page = Integer.parseInt(text);
                 if (page > maxPage){
