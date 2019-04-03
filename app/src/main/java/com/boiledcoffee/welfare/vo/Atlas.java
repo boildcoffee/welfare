@@ -8,11 +8,10 @@ import java.util.List;
  */
 
 public class Atlas {
-    private String title;
-    private String cover;
-    private String typeName;
-    private String url;
-    private String detailUrl;
+    private String title; //图册标题
+    private String cover; //封面地址
+    private String typeName;//所属类型名
+    private String detailUrl;// 图册页面地址
 
     public String getTitle() {
         return title;
@@ -36,14 +35,6 @@ public class Atlas {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getDetailUrl() {

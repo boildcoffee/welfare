@@ -5,8 +5,8 @@ package com.boiledcoffee.welfare.vo;
  */
 
 public class Type {
-    private String name;
-    private String url;
+    private String name; //类型名称
+    private String url; //页面地址
 
     public String getName() {
         return name;
