@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.boildcoffee.base.BaseActivity;
 import com.boildcoffee.welfare.R;
 import com.boildcoffee.welfare.databinding.ActivityMainBinding;
+import com.boiledcoffee.welfare.MyApplication;
 import com.boiledcoffee.welfare.vm.MainVm;
 
 public class MainActivity extends BaseActivity {
@@ -16,5 +17,11 @@ public class MainActivity extends BaseActivity {
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainVm = new MainVm(this);
         mainVm.startGetData(types -> binding.setMainVm(mainVm));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApplication.mInstance.getAppDatabase().close();
     }
 }

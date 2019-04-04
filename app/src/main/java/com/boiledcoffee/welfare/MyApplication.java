@@ -15,7 +15,7 @@ import com.boiledcoffee.welfare.repository.ImageRepository;
  */
 
 public class MyApplication extends BaseApplication{
-    public static final String BASE_URL = "http://www.mzitu.com/";
+    public static final String BASE_URL = "https://www.mzitu.com/";
 
     @Override
     public void onCreate() {
@@ -23,7 +23,7 @@ public class MyApplication extends BaseApplication{
         BFConfig.INSTANCE.init(new BaseConfig.Builder()
                 .setBaseUrl(BASE_URL)
                 .setPageSize(24)
-                .setApiQueryCacheMode(BaseConfig.CacheMode.CACHE_ELSE_NETWORK)
+                .setApiQueryCacheMode(BaseConfig.CacheMode.NETWORK_ELSE_CACHE)
                 .setRspCacheTime(1000 * 60 * 60 * 24)
                 .setConverter(DocumentConverter.create())
                 .setDebug(true)
