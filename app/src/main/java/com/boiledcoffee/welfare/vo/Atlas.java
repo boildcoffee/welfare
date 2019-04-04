@@ -1,7 +1,5 @@
 package com.boiledcoffee.welfare.vo;
 
-import java.util.List;
-
 /**
  *
  * Created by jason on 2018/3/17.

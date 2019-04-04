@@ -13,6 +13,7 @@ import com.boiledcoffee.welfare.vo.Atlas;
 import com.boiledcoffee.welfare.vo.Image;
 import com.boiledcoffee.welfare.vo.Type;
 
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -48,7 +49,7 @@ public class ImageRepository {
             "loadWelfareImg"
     })
     public static void loadWelfareImg(ImageView v,String url){
-        if (url == null) return;
+        if (url == null || url.equals("") || v == null) return;
 
         Map<String,String> headers = new HashMap<>();
         headers.put("referer",BFConfig.INSTANCE.getConfig().getBaseUrl() + mCurrentUrl);
@@ -207,13 +208,11 @@ public class ImageRepository {
                 continue;
             }
             String text = element.text();
-            try {
+            if (StringUtil.isNumeric(text)){
                 int page = Integer.parseInt(text);
                 if (page > maxPage){
                     maxPage = page;
                 }
-            }catch (Exception e){
-                e.printStackTrace();
             }
         }
         mTypeMaxPageMap.put(mCurrentUrl,maxPage);
